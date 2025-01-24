@@ -5,7 +5,7 @@ const app = epxress()
 const pool = require('./app/config/mysql'); // Asegúrate de importar correctamente
 dotenv.config({ path: './.env' });
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3030
 app.use(cors())
 app.use(epxress.json())
 

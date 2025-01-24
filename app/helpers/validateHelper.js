@@ -1,13 +1,18 @@
-const { validationResult } = require('express-validator'); //TODO:
+const { validationResult } = require('express-validator');
 
 const validateResult = (req, res, next) => {
     try {
-        validationResult(req).throw()
-        return next()
+        // Valida los resultados de las validaciones
+        validationResult(req).throw(); 
+        return next(); // Si no hay errores, pasa al siguiente middleware
     } catch (err) {
-        res.status(403)
-        res.send({ errors: err.array() })
+        // Devuelve una respuesta clara con un código de error adecuado
+        return res.status(400).json({
+            success: false,
+            message: "Validation error",
+            errors: err.array(), // Lista detallada de errores
+        });
     }
-}
+};
 
-module.exports = { validateResult }
+module.exports = { validateResult };

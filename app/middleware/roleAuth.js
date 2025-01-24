@@ -1,11 +1,8 @@
 
-const { verifyToken } = require('../helpers/generateToken')
+
 
 const checkRoleAuth = (roles) => async (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(' ').pop() //TODO: 231231321
-        const tokenData = await verifyToken(token)
-        const userData = await userModel.findById(tokenData._id) //TODO: 696966
 
         //TODO ['user'].includes('user')
         if ([].concat(roles).includes(userData.role)) { //TODO:
