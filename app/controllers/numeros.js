@@ -119,33 +119,31 @@ const insertNewNumber = async (req, res) => {
   }
 }
 
-const deleteNumber = (tableName) => async (req, res) => {
+const deleteNumber =  async (req, res) => {
+  console.log(req.body)
   const { id } = req.body;
+  console.log("Id")
 
-  if (!id) {
-    return res.status(400).send('El ID es requerido');
-  }
-
-  const checkQuery = `SELECT id FROM ${tableName} WHERE id = ?`;
-  const deleteQuery = `DELETE FROM ${tableName} WHERE id = ?`;
+  const checkQuery = `SELECT id FROM NuevosNumerosTest WHERE id = ?`;
+  const deleteQuery = `DELETE FROM NuevosNumerosTest WHERE id = ?`;
 
   pool.query(checkQuery, [id], (err, results) => {
     if (err) {
-      console.error(`Error verificando en la tabla ${tableName}:`, err);
-      return res.status(500).send(`Error verificando el registro en ${tableName}`);
+      console.error(`Error verificando en la tabla :`, err);
+      return res.status(500).send(`Error verificando el registro en `);
     }
 
     if (results.length === 0) {
-      return res.status(404).send(`El registro con ID ${id} no existe en la tabla ${tableName}`);
+      return res.status(404).send(`El registro con ID ${id} no existe en la tabla `);
     }
 
     pool.query(deleteQuery, [id], (err) => {
       if (err) {
-        console.error(`Error eliminando en la tabla ${tableName}:`, err);
-        return res.status(500).send(`Error eliminando el registro en ${tableName}`);
+        console.error(`Error eliminando en la tabla :`, err);
+        return res.status(500).send(`Error eliminando el registro en `);
       }
 
-      res.status(200).send(`Registro eliminado exitosamente de ${tableName}`);
+      res.status(200).send(`Registro eliminado exitosamente de `);
     });
   });
 };

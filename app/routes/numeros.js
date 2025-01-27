@@ -21,11 +21,7 @@ router.get('/getInaccessibleNumbers/admin', validateUserRoleAdmin(['admin']), ge
 
 router.get('/getTimeUsed/admin', validateUserRoleAdmin(['admin']), getTimeUsed)
 
-router.delete('/deleteNewNumber/admin', validateUserRoleAdmin(['admin']), deleteNumber('NuevosNumeros'));
-
-router.delete( '/deleteInaccessibleNumber/admin', validateUserRoleAdmin(['admin']), deleteNumber('NumerosInaccesibles'));
-
-router.delete( '/deleteContactedNumber/admin', validateUserRoleAdmin(['admin']), deleteNumber('NumerosContactados'));
+router.post( '/deleteNumber/admin', deleteNumber);
 
 router.get('/getContactedNumbers/user', validateUserRoleUser(['user']), getContactedNumbers)
 
