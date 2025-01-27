@@ -164,14 +164,12 @@ const getUsersAdmin = async (req, res) => {
 }
 
 const editUserAdmin = async (req, res) => {
-    const { email, rol, status } = req.body;
+    const { email, rol } = req.body;
+    console.log(email,rol)
     // Verificar que los datos están presentes
-    if (!email || !rol || status === undefined) {
+    if (!email || !rol) {
       return res.status(400).send('Faltan datos obligatorios');
     }
-  
-    // Convertir el valor de status a 1 o 0 si es booleano
-    const convertedStatus = status === "true" ? 1 : status === "false" ? 0 : status;
   
     pool.getConnection((err, connection) => {
       if (err) return res.status(500).send('Error al conectar con la base de datos');
@@ -194,7 +192,7 @@ const editUserAdmin = async (req, res) => {
           SET email = ?, rol = ?
           WHERE email = ?
         `;
-        const updateValues = [email, rol, convertedStatus, email];
+        const updateValues = [email, rol, email];
   
         connection.query(updateQuery, updateValues, (err) => {
           connection.release();

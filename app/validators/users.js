@@ -28,7 +28,7 @@ const validateCreateUser = [
     }
 ];
 
-const validateUserRole = (roles) => async (req, res, next) => {
+const validateUserRoleAdmin = (roles) => async (req, res, next) => {
     try {
         // Suponiendo que el rol del usuario está en `req.user.role`
         const role = req.query.role; // Captura el parámetro de consulta
@@ -46,4 +46,24 @@ const validateUserRole = (roles) => async (req, res, next) => {
     }
 };
 
-module.exports = { validateCreateUser, validateUserRole };
+const validateUserRoleUser = (roles) => async (req, res, next) => {
+    try {
+        // Suponiendo que el rol del usuario está en `req.user.role`
+        const role = req.query.role; // Captura el parámetro de consulta
+
+        // Convertir `roles` a un array y verificar si incluye el rol del usuario
+        if ([].concat(roles).includes(role)) {
+            return next(); // Continuar con la siguiente función si el rol es válido
+        }
+
+        // Si el rol no es válido, devolver error
+        res.status(403).json({ error: 'No tienes permisos para acceder a este recurso' });
+    } catch (e) {
+        console.error('Error en validateUserRole:', e);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+};
+
+
+
+module.exports = { validateCreateUser, validateUserRoleAdmin, validateUserRoleUser };
